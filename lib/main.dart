@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:math';
 import 'package:quiver/async.dart';
 import 'package:flutter/material.dart';
@@ -30,9 +31,15 @@ class LovingKindnessMain extends StatefulWidget {
 
 class LovingKindnessMainState extends State<LovingKindnessMain> {
   double angle = 0;
-  dynamic timer;
+  StreamSubscription<CountdownTimer> timer;
+  Stopwatch stopwatch;
   LovingKindnessMainState() {
-    this.timer = CountdownTimer(Duration(minutes: 15), Duration(milliseconds: 100))
+    setupTimer(Duration(minutes: 15));
+  }
+
+  void setupTimer(Duration duration) {
+    stopwatch = Stopwatch();
+    this.timer = CountdownTimer(duration, Duration(milliseconds: 100), stopwatch: stopwatch)
         .listen((CountdownTimer event) {
       final total = event.elapsed + event.remaining;
       setState(() {
@@ -58,6 +65,16 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
           "Loving Kindness Meditation",
           style: TextStyle(fontSize: 30),
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(
+          stopwatch.isRunning ? Icons.pause : Icons.play_arrow
+        ),
+        onPressed: () {
+          setState(() {
+            stopwatch.isRunning ? stopwatch.stop() : stopwatch.start();
+          });
+        },
       ),
       body: Container(
           child: Column(
