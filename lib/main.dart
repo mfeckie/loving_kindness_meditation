@@ -54,7 +54,7 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
   get elapsedFormatted {
     final minutes = padTime(elapsed.inMinutes % 60);
     final seconds = padTime(elapsed.inSeconds % 60);
-    return "Elapesed time $minutes:$seconds";
+    return "Elapsed time $minutes:$seconds";
   }
 
   @override
@@ -119,7 +119,6 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
           ),
           Expanded(
             child: Container(
-              color: Colors.purple,
             ),
           )
         ],
