@@ -1,13 +1,19 @@
 import 'dart:async';
 import 'dart:math';
+import 'package:flutter/services.dart';
 import 'package:quiver/async.dart';
 import 'package:flutter/material.dart';
 import 'package:loving_kindness_meditation/widgets/clock_background.dart';
 import 'package:loving_kindness_meditation/widgets/clock_window.dart';
 import 'package:loving_kindness_meditation/widgets/clock_window_frame.dart';
 
-void main() => runApp(MyApp());
-
+void main() {
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown
+  ]);
+  runApp(MyApp());
+}
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
