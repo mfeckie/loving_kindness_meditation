@@ -36,15 +36,16 @@ class LovingKindnessMain extends StatefulWidget {
 
 class LovingKindnessMainState extends State<LovingKindnessMain> {
   double angle = 0;
+  Duration meditationTime;
   StreamSubscription<CountdownTimer> timer;
   Stopwatch stopwatch;
   LovingKindnessMainState() {
-    setupTimer(Duration(minutes: 15));
+    setupTimer();
   }
 
-  void setupTimer(Duration duration) {
+  void setupTimer() {
     stopwatch = Stopwatch();
-    this.timer = CountdownTimer(duration, Duration(milliseconds: 100),
+    this.timer = CountdownTimer(meditationTime, Duration(milliseconds: 100),
             stopwatch: stopwatch)
         .listen((CountdownTimer event) {
       final total = event.elapsed + event.remaining;
@@ -53,6 +54,8 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
         elapsed = event.elapsed;
       });
     });
+    stopwatch.stop();
+    stopwatch.reset();
   }
 
   Duration elapsed = Duration(minutes: 0);
@@ -61,6 +64,12 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
     final minutes = padTime(elapsed.inMinutes % 60);
     final seconds = padTime(elapsed.inSeconds % 60);
     return "Elapsed time $minutes:$seconds";
+  }
+
+  get totalFormatted {
+    final minutes = padTime(meditationTime.inMinutes % 60);
+    final seconds = padTime(meditationTime.inSeconds % 60);
+    return "Total time $minutes:$seconds";
   }
 
   @override
@@ -75,13 +84,56 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
       bottomNavigationBar: BottomAppBar(
         notchMargin: 4.0,
         shape: CircularNotchedRectangle(),
-        child: Row(
-          children: <Widget>[
-            IconButton(
-              icon: Icon(Icons.menu),
-              onPressed: () {},
-            )
-          ],
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            children: <Widget>[
+              IconButton(
+                iconSize: 50,
+                icon: Icon(Icons.menu),
+                onPressed: () {
+                  showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return BottomSheet(
+                          enableDrag: false,
+                          builder: (BuildContext context) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: <Widget>[
+                                FlatButton(
+                                  padding: EdgeInsets.symmetric(vertical: 20),
+                                  child: Text("Set 15 minutes",
+                                      style: TextStyle(fontSize: 24.0)),
+                                  onPressed: () {
+                                    meditationTime = Duration(minutes: 15);
+                                    timer.cancel();
+                                    setupTimer();
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                FlatButton(
+                                  padding: EdgeInsets.symmetric(vertical: 20),
+                                  child: Text("Set 30 minutes",
+                                      style: TextStyle(fontSize: 24.0)),
+                                  onPressed: () {
+                                    meditationTime = Duration(minutes: 30);
+                                    timer.cancel();
+                                    setupTimer();
+                                    Navigator.of(context).pop();
+                                  },
+                                )
+                              ],
+                            );
+                          },
+                          onClosing: () {},
+                        );
+                      });
+                },
+              )
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
@@ -99,11 +151,18 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
           Container(
               width: double.infinity,
               height: 100,
-              child: Center(
-                child: Text(
-                  elapsedFormatted,
-                  style: TextStyle(fontSize: 25),
-                ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  Text(
+                    elapsedFormatted,
+                    style: TextStyle(fontSize: 25),
+                  ),
+                  Text(
+                    totalFormatted,
+                    style: TextStyle(fontSize: 15),
+                  )
+                ],
               )),
           Container(
             padding: EdgeInsets.all(8.0),
