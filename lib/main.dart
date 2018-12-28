@@ -24,7 +24,7 @@ class MyApp extends StatelessWidget {
 }
 
 String padTime(int number) {
- return number.toString().padLeft(2, "0") ;
+  return number.toString().padLeft(2, "0");
 }
 
 class LovingKindnessMain extends StatefulWidget {
@@ -44,7 +44,8 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
 
   void setupTimer(Duration duration) {
     stopwatch = Stopwatch();
-    this.timer = CountdownTimer(duration, Duration(milliseconds: 100), stopwatch: stopwatch)
+    this.timer = CountdownTimer(duration, Duration(milliseconds: 100),
+            stopwatch: stopwatch)
         .listen((CountdownTimer event) {
       final total = event.elapsed + event.remaining;
       setState(() {
@@ -71,10 +72,21 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
           style: TextStyle(fontSize: 30),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        child: Icon(
-          stopwatch.isRunning ? Icons.pause : Icons.play_arrow
+      bottomNavigationBar: BottomAppBar(
+        notchMargin: 4.0,
+        shape: CircularNotchedRectangle(),
+        child: Row(
+          children: <Widget>[
+            IconButton(
+              icon: Icon(Icons.menu),
+              onPressed: () {},
+            )
+          ],
         ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: FloatingActionButton(
+        child: Icon(stopwatch.isRunning ? Icons.pause : Icons.play_arrow),
         onPressed: () {
           setState(() {
             stopwatch.isRunning ? stopwatch.stop() : stopwatch.start();
@@ -90,10 +102,8 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
               child: Center(
                 child: Text(
                   elapsedFormatted,
-                  style: TextStyle(
-                    fontSize: 25
-                  ),
-                  ),
+                  style: TextStyle(fontSize: 25),
+                ),
               )),
           Container(
             padding: EdgeInsets.all(8.0),
@@ -123,8 +133,7 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
             ),
           ),
           Expanded(
-            child: Container(
-            ),
+            child: Container(),
           )
         ],
       )),
