@@ -164,31 +164,47 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
                   )
                 ],
               )),
-          Container(
-            padding: EdgeInsets.all(8.0),
-            width: double.infinity,
-            height: 400,
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                CustomPaint(
-                  painter: ClockBackground(),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: AspectRatio(
+              aspectRatio: 1,
+              child: Container(
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey,
+                      blurRadius: 2.0,
+                      spreadRadius: 1,
+                      offset: Offset(0, 1)
+                    )
+                  ]
                 ),
-                Transform.rotate(
-                  angle: angle,
-                  child: Stack(
-                    fit: StackFit.expand,
-                    children: <Widget>[
-                      CustomPaint(
-                        painter: ClockWindow(),
+                width: double.infinity,
+                height: 400,
+                child: Stack(
+                  fit: StackFit.expand,
+                  children: [
+                    CustomPaint(
+                      painter: ClockBackground(),
+                    ),
+                    Transform.rotate(
+                      angle: angle,
+                      child: Stack(
+                        fit: StackFit.expand,
+                        children: <Widget>[
+                          CustomPaint(
+                            painter: ClockWindow(),
+                          ),
+                          CustomPaint(
+                            painter: ClockWindowFrame(),
+                          )
+                        ],
                       ),
-                      CustomPaint(
-                        painter: ClockWindowFrame(),
-                      )
-                    ],
-                  ),
-                )
-              ],
+                    )
+                  ],
+                ),
+              ),
             ),
           ),
           Expanded(
