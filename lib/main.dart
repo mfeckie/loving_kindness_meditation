@@ -36,7 +36,7 @@ class LovingKindnessMain extends StatefulWidget {
 
 class LovingKindnessMainState extends State<LovingKindnessMain> {
   double angle = 0;
-  Duration meditationTime;
+  Duration meditationTime = Duration(minutes: 15);
   StreamSubscription<CountdownTimer> timer;
   Stopwatch stopwatch;
   LovingKindnessMainState() {
