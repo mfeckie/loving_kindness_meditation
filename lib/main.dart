@@ -169,17 +169,13 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
             child: AspectRatio(
               aspectRatio: 1,
               child: Container(
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  boxShadow: [
-                    BoxShadow(
+                decoration: BoxDecoration(shape: BoxShape.circle, boxShadow: [
+                  BoxShadow(
                       color: Colors.grey,
                       blurRadius: 2.0,
                       spreadRadius: 1,
-                      offset: Offset(0, 1)
-                    )
-                  ]
-                ),
+                      offset: Offset(0, 1))
+                ]),
                 width: double.infinity,
                 height: 400,
                 child: Stack(
