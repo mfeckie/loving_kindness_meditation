@@ -72,6 +72,10 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
     return "Total time $minutes:$seconds";
   }
 
+  setMeditationTime(int duration) {
+    meditationTime = Duration(minutes: duration);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -95,40 +99,10 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
                   showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
-                        return BottomSheet(
-                          enableDrag: false,
-                          builder: (BuildContext context) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              mainAxisAlignment: MainAxisAlignment.spaceAround,
-                              children: <Widget>[
-                                FlatButton(
-                                  padding: EdgeInsets.symmetric(vertical: 20),
-                                  child: Text("Set 15 minutes",
-                                      style: TextStyle(fontSize: 24.0)),
-                                  onPressed: () {
-                                    meditationTime = Duration(minutes: 15);
-                                    timer.cancel();
-                                    setupTimer();
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                FlatButton(
-                                  padding: EdgeInsets.symmetric(vertical: 20),
-                                  child: Text("Set 30 minutes",
-                                      style: TextStyle(fontSize: 24.0)),
-                                  onPressed: () {
-                                    meditationTime = Duration(minutes: 30);
-                                    timer.cancel();
-                                    setupTimer();
-                                    Navigator.of(context).pop();
-                                  },
-                                )
-                              ],
-                            );
-                          },
-                          onClosing: () {},
-                        );
+                        return new TimeSelectionModal(
+                            timer: timer,
+                            setTime: setMeditationTime,
+                            setupTimer: setupTimer);
                       });
                 },
               )
@@ -208,6 +182,56 @@ class LovingKindnessMainState extends State<LovingKindnessMain> {
           )
         ],
       )),
+    );
+  }
+}
+
+class TimeSelectionModal extends StatelessWidget {
+  const TimeSelectionModal({
+    Key key,
+    @required this.timer,
+    @required this.setTime,
+    @required this.setupTimer,
+  }) : super(key: key);
+
+  final StreamSubscription<CountdownTimer> timer;
+  final Function setTime;
+  final Function setupTimer;
+
+  @override
+  Widget build(BuildContext context) {
+    return BottomSheet(
+      enableDrag: false,
+      builder: (BuildContext context) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisSize: MainAxisSize.max,
+          children: <Widget>[
+            FlatButton(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Text("Set 15 minutes", style: TextStyle(fontSize: 24.0)),
+              onPressed: () {
+                setTime(15);
+                timer.cancel();
+                setupTimer();
+                Navigator.of(context).pop();
+              },
+            ),
+            FlatButton(
+              padding: EdgeInsets.symmetric(vertical: 20),
+              child: Text("Set 30 minutes", style: TextStyle(fontSize: 24.0)),
+              onPressed: () {
+                setTime(30);
+                timer.cancel();
+                setupTimer();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+      onClosing: () {},
     );
   }
 }
