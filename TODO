@@ -1,0 +1,22 @@
+
+Time Choose Page [percentage]:
+  ☐ Add 15 minute button @5m
+  ☐ Add 30 minute button @5m
+  ☐ Add manual minutes @30m
+  ☐ Remove second menu item from main page @5m
+  Manual Minutes: 
+    ☐ Make it accept only whole number @10m
+    ☐ Add a button to complete setting and transtion back @10m
+State Provider:
+  ☐ Create a meditation timer class state provider @30m
+  ☐ Make the provider a singleton and inherited widget @30m
+  ☐ Make the output a listenable stream @20m
+  ☐ Add methods for altering state @30m
+Timer Page:
+  ☐ Convert background to a more meaningful image
+  Affinity Desginer:
+  ☐ Create a meaningful background image for the clock
+  ☐ Export to PNG
+  ☐ Use image as bottom of `Stack`
+  ☐ Adjust image to wrap with correctly shaped container and position correctly
+
