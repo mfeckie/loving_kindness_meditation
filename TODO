@@ -12,6 +12,7 @@ State Provider:
   ☐ Make the provider a singleton and inherited widget @30m
   ☐ Make the output a listenable stream @20m
   ☐ Add methods for altering state @30m
+  ☐ Add timers for 1/4, 1/2, 3/4 and meditation completion
 Timer Page:
   ☐ Convert background to a more meaningful image
   Affinity Desginer:
